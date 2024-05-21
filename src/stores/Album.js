@@ -1,0 +1,28 @@
+class Musique extends Article {
+    _artiste;
+    _dateDeParution;
+
+    constructor(id, titre, prix, disponibilite, image, articleType, artiste, dateDeParution) {
+        super(id, titre, prix, disponibilite, image, articleType);
+        this._artiste = artiste;
+        this._dateDeParution = dateDeParution;
+    }
+
+    getArtiste() {
+        return this._artiste;
+    }
+
+    setArtiste(artiste) {
+        this._artiste = artiste;
+        return this;
+    }
+
+    getDateDeParution() {
+        return this._dateDeParution;
+    }
+
+    setDateDeParution(dateDeParution) {
+        this._dateDeParution = dateDeParution;
+        return this;
+    }
+}
