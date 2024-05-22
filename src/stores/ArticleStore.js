@@ -1,7 +1,8 @@
 import { makeAutoObservable, runInAction, values } from "mobx";
 import { API_URL_GET_PRODUCTS } from "./config";
+import { Article } from "./Article";
 
-class ArticleStore {
+export default class ArticleStore {
     _loading;_error;_articles;
 
     constructor(){
@@ -16,8 +17,7 @@ class ArticleStore {
         try {
             let articles = await fetch(API_URL_GET_PRODUCTS).then((value)=> value.json())
             runInAction(() => {
-                this._articles = articles.map((article) => new Student(article));
-                this._students = this._students.sort((a, b) => a.fullName.localeCompare(b.fullName));
+                this._articles = articles.map((article) => new Article(article));
                 this._loading = false;
             });
         } catch (error) {
@@ -26,5 +26,29 @@ class ArticleStore {
                 this._loading = false;
             })
         }
+    }
+
+    get articles() {
+        return this._articles;
+    }
+
+    get loading() {
+        return this._loading;
+    }
+
+    get error() {
+        return this._error;
+    }
+
+    set articles(articles) {
+        this._articles = articles;
+    }
+
+    set loading(loading) {
+        this._loading = loading;
+    }
+
+    set error(error) {
+        this._error = error;
     }
 }

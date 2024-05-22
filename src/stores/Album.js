@@ -1,4 +1,6 @@
-class Musique extends Article {
+import { Article } from "./Article";
+
+export class Album extends Article {
     _artiste;
     _dateDeParution;
 

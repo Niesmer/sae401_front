@@ -1,14 +1,13 @@
-import {observer}
-import { useArticleStore } from './stores';
-import { Outlet } from 'react-router-dom';
+import { observer } from "mobx-react";
+import { useArticleStore } from "./stores";
+import { NavLink, Outlet } from "react-router-dom";
 
 function App() {
   let articleStore = useArticleStore();
   return (
     <>
-    <main>
-      {articleStore.loading ? <p>Chargement</p> : <Outlet/>}
-    </main>
+      <nav>App</nav>
+      <main>{articleStore.loading ? <p>Chargement</p> : <Outlet />}</main>
     </>
   );
 }
