@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import { useArticleStore } from "./stores";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function App() {
   let articleStore = useArticleStore();

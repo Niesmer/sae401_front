@@ -6,65 +6,65 @@ export class Article {
     _image;
     _articleType;
 
-    constructor({id, titre, prix, disponibilite, image, articleType}) {
+    constructor({id, titre, prix, disponibilite, image, article_type}) {
         this._id = id;
         this._titre = titre;
         this._prix = prix;
         this._disponibilite = disponibilite;
         this._image = image;
-        this._articleType = articleType;
+        this._articleType = article_type;
     }
 
-    getId() {
+    get id() {
         return this._id;
     }
 
-    setId(id) {
+    set id(id) {
         this._id = id;
         return this;
     }
 
-    getTitre() {
+    get titre() {
         return this._titre;
     }
 
-    setTitre(titre) {
+    set titre(titre) {
         this._titre = titre;
         return this;
     }
 
-    getPrix() {
+    get prix() {
         return this._prix;
     }
 
-    setPrix(prix) {
+    set prix(prix) {
         this._prix = prix;
         return this;
     }
 
-    getDisponibilite() {
+    get disponibilite() {
         return this._disponibilite;
     }
 
-    setDisponibilite(disponibilite) {
+    set disponibilite(disponibilite) {
         this._disponibilite = disponibilite;
         return this;
     }
 
-    getImage() {
+    get image() {
         return this._image;
     }
 
-    setImage(image) {
+    set image(image) {
         this._image = image;
         return this;
     }
 
-    getArticleType() {
+    get articleType() {
         return this._articleType;
     }
 
-    setArticleType(articleType) {
+    set articleType(articleType) {
         this._articleType = articleType;
         return this;
     }

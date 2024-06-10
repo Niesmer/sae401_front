@@ -3,8 +3,10 @@ import ArticleList from "../components/ArticleList";
 function PageAdmin(props) {
   return (
     <div>
-      test
-      <ArticleList></ArticleList>
+      Admin article
+      <table className="table-auto">
+        <ArticleList></ArticleList>
+      </table>
     </div>
   );
 }

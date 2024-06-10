@@ -1,6 +1,6 @@
 import { Article } from "./Article";
 
-class Livre extends Article {
+export class Livre extends Article {
     _auteur;
     _ISBN;
     _nbPages;

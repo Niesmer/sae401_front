@@ -9,10 +9,6 @@ export const router = createBrowserRouter([
         errorElement: <Page404 />,
         children: [
             {
-                path: "/",
-                element: <Home>
-            },
-            {
                 path: "/admin",
                 element: <PageAdmin />
             },

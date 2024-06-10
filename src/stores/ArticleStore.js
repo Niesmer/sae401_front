@@ -28,6 +28,23 @@ export default class ArticleStore {
         }
     }
 
+    async deleteArticle(id){
+        try {
+            let response = await fetch(API_URL_GET_PRODUCTS + '/' + id, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                runInAction(() => {
+                    this._articles = this._articles.filter((article) => article.id !== id);
+                });
+            }
+        } catch (error) {
+            runInAction(()=> {
+                this._error = error;
+            })
+        }
+    }
+
     get articles() {
         return this._articles;
     }
