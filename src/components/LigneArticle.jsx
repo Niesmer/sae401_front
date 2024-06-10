@@ -5,16 +5,19 @@ function LigneArticle({ data = {}, keys = null, handleBtn = () => {}}) {
     keys = Object.keys(data);
   }
   return (
-    <tr>
+    <>
       {keys.map((key) => {
         return data[key] ? (
-          <td key={key}>
+          <ul>
+            <li key={key}>
             {key}: {data[key]}{" "}
-          </td>
+          </li>
+          </ul>
+          
         ) : null;
       })}
       <button onClick={handleBtn}>Supprimer</button>
-    </tr>
+    </>
   );
 }
 

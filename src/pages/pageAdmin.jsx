@@ -4,9 +4,10 @@ function PageAdmin(props) {
   return (
     <div>
       Admin article
-      <table className="table-auto">
+      <ul className="table-auto">
         <ArticleList></ArticleList>
-      </table>
+      </ul>
+
     </div>
   );
 }
