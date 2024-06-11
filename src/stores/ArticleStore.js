@@ -28,6 +28,8 @@ export default class ArticleStore {
         }
     }
 
+    
+
     async deleteArticle(id){
         try {
             let response = await fetch(API_URL_GET_PRODUCTS + '/' + id, {
@@ -67,5 +69,37 @@ export default class ArticleStore {
 
     set error(error) {
         this._error = error;
+    }
+
+    getArticle(id) {
+        return this._articles.find((article) => article.id === id)
+    }
+
+    async updateArtucke(data) {
+        let article = this.article(data.id);
+        if (!article) {
+            return { success: false, message: "Article inexistant" };
+        } else {
+            try {
+                const response = await fetch(`${API_URL_GET_PRODUCTS}/${article.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    let { id, ...updatedData } = data;
+                    runInAction(() => {
+                        Object.assign(article, updatedData);
+                    });
+                    return { success: true, message: "Article modifié" };
+                } else {
+                    return { success: false, message: `Request failed with status ${response.status}` };
+                }
+            } catch (error) {
+                return { success: false, message: `${error}` };
+            }
+        }
     }
 }
