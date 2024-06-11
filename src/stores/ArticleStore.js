@@ -71,6 +71,16 @@ export default class ArticleStore {
         this._error = error;
     }
 
+    async addArticle(article){
+        fetch(`${API_URL_GET_PRODUCTS}`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:article,
+        })
+    }
+
     async getArticle(id) {
         let article = await fetch(`${API_URL_GET_PRODUCTS}/${id}`,{
             method: 'GET',
