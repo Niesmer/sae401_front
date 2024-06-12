@@ -19,9 +19,8 @@ function PageAdmin(props) {
   };
   return (
     <div>
-      Admin article
       <button className="btn" onClick={()=>handleBtnAdd()}>Ajouter un article</button>
-      <ul >
+      <ul className="grid grid-flow-row gap-3 border rounded-lg">
         <ArticleList></ArticleList>
       </ul>
       {visibleAdd && (

@@ -7,10 +7,13 @@ function Popup({action, onConfirm={}, onCancel ={}, children}) {
   
   return (
     
-    <div>
+    <div className="bg-white border absolute z-20 gap-4 rounded-lg p-6 flex flex-col align-middle">
       {children}
-        <button className="btn" onClick={onConfirm}>{action}</button>
-        <button className="btn" onClick={onCancel}>Annuler</button>
+      <div className="flex justify-center gap-4">
+        <button className="btn w-full rounded-full" title="confirm" onClick={onConfirm}>{action}</button>
+        <button className="btn w-full rounded-full" title="cancel" onClick={onCancel}>Annuler</button>
+      </div>
+        
     </div>
 
     

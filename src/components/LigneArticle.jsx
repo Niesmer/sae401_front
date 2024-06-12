@@ -1,4 +1,5 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function LigneArticle({ data = {}, keys = null, handleBtnDel = () => {}, handleBtnEdit = () => {}, handleBtnDetails = ()=>{}}) {
   if (!keys) {
@@ -6,22 +7,23 @@ function LigneArticle({ data = {}, keys = null, handleBtnDel = () => {}, handleB
     console.log(keys);
   }
   return (
-    <><li><ul className={`grid grid-cols-${keys.length}`}>
+    <>
+    <li className={`grid grid-flow-col auto-cols-[1fr] border-t p-2`}>
       {keys.map((key) => {
         return data[key] ? (
           
-            <li key={key}>
-            {key}: {data[key]}{" "}
-          </li>
+            <p className="max-w-25 text-ellipsis overflow-hidden" key={key}>
+            {data[key]}{" "}
+          </p>
           
           
         ) : null;
       })}
-      <li>
-        <button className="btn" onClick={handleBtnDel}>Supprimer</button>
-      <button className="btn" onClick={handleBtnEdit}>Modifier</button>
-      <button className="btn" onClick={handleBtnDetails}>Détails</button>
-      </li></ul></li>
+      <div className="flex justify-center gap-2">
+        <button title="delete" className="btn h-8" onClick={handleBtnDel}><img alt="supprimer" className="w-5 h-5" src="/bin.svg"></img></button>
+      <button title='edit' className="btn h-8" onClick={handleBtnEdit}><img alt="modifier" className="w-5 h-5" src="/edit.svg"></img></button>
+      <button title="details" className="btn h-8" onClick={handleBtnDetails}><img alt="détails" className="w-5 h-5" src="/infos.svg"></img></button>
+      </div></li>
       
     </>
   );

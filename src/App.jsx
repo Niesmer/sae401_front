@@ -6,7 +6,7 @@ function App() {
   let articleStore = useArticleStore();
   return (
     <>
-      <nav>App</nav>
+      <nav></nav>
       <main>{articleStore.loading ? <p>Chargement</p> : <Outlet />}</main>
     </>
   );

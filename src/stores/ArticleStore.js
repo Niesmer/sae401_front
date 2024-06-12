@@ -91,7 +91,7 @@ export default class ArticleStore {
         return article;
     }
 
-    async updateArtucke(data) {
+    async updateArticle(data) {
         let article = this.article(data.id);
         if (!article) {
             return { success: false, message: "Article inexistant" };
