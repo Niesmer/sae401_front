@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useArticleStore } from "../stores";
 import LigneArticle from "./LigneArticle";
 import Popup from "./Popup";
-import PopupInfos from "./PopupInfos";
 
 function formatString(str) {
   let cleanedString = str.replace('_', '');
@@ -16,6 +15,7 @@ function ArticleList() {
   const [visibleDel, setVisibleDel] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [visibleDetails, setVisibleDetails] = useState(false);
+  const [error, setError] = useState(null);
   const [keys, setKeys] = useState([]);
   
   useEffect(() => {
@@ -34,14 +34,29 @@ function ArticleList() {
   };
 
   const handleBtnEdit = (id) => {
-    
+    setSelectedArticle(ArticleStore.getArticle(id));
     setSelectedId(id);
     setVisibleEdit(true);
   };
   const handleBtnDetails = (id) => {
+    setSelectedArticle(ArticleStore.getArticle(id))
+
     setSelectedId(id);
     setVisibleDetails(true);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const dataUpdated = Object.fromEntries(new FormData(e.target));
+    console.log(dataUpdated);
+    const result = ArticleStore.updateArticle({selectedId, ...dataUpdated});
+    result.success ? closePopupEdit() : setError(result.message);
+    }
+
+  const handleDelete = (e) =>{
+    const result = ArticleStore.deleteArticle(selectedId);
+    result.success ? closePopupDel() : setError(result.message);
+  }
 
 
 
@@ -67,7 +82,7 @@ function ArticleList() {
 
   return (
     <>
-      <li>
+      <li className="hidden md:block">
       <ul className={`grid grid-flow-col auto-cols-[1fr]`}>
           {keys.map((key) => (
             <li className="text-center" key={key}>{formatString(key)}</li>
@@ -89,27 +104,28 @@ function ArticleList() {
         action="Supprimer"
           onCancel={closePopupDel}
           onConfirm={() => {
-            ArticleStore.deleteArticle(selectedId);
-            closePopupDel();
+            handleDelete();
+            
           }}
         >
           <div className="flex flex-col justify-center"><h3>Supprimer l'article {selectedId}</h3>
             <p>Voulez-vous supprimer l'article {selectedId} ?</p></div>
-          
+            {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
+
         </Popup>
       )}
       {visibleEdit && (
         <Popup
           action="Enregistrer"
           onCancel={closePopupEdit}
+          zIndex={20}
           onConfirm={() => {
-            ArticleStore.updateArticle();
-            closePopupEdit();
+            handleSubmit();
           }}
         >
           <h3>{`Modifier l'article ${selectedId}`}</h3>
           <ul className="flex flex-col gap-2">
-            {Object.keys(ArticleStore.getArticle(selectedId)).filter(key => key !== '_articleType').map((key) => (
+            {Object.keys(selectedArticle).filter(key => key !== '_articleType').map((key) => (
               <li key={key} className="grid grid-cols-2 gap-4">
                 <label className="text-right" htmlFor={key}>{formatString(key)}:</label>
                 <input
@@ -122,11 +138,15 @@ function ArticleList() {
               </li>
             ))}
           </ul>
+          {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
+
         </Popup>
       )}
       {visibleDetails && (
-        <PopupInfos onClose={closePopupDetails}>
-          <h3>{`Détails de l'article ${selectedArticle.id}`}</h3>
+        <Popup onCancel={closePopupDetails}
+        onConfirm={() => handleBtnEdit(selectedId)}
+        action={"Modifier"}>
+          <h3>{`Détails de l'article ${selectedId}`}</h3>
           <ul>
             {Object.keys(selectedArticle).map((key) => (
               <li key={key} className="grid grid-cols-2 gap-4">
@@ -135,8 +155,7 @@ function ArticleList() {
               </li>
             ))}
           </ul>
-          <button className="btn w-full rounded-full" onClick={()=> handleBtnEdit(selectedArticle)}>Modifier</button>
-        </PopupInfos>
+        </Popup>
       )}
     </>
   );
