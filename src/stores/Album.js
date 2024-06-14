@@ -4,8 +4,8 @@ export class Album extends Article {
     _artiste;
     _dateDeParution;
 
-    constructor(id, titre, prix, disponibilite, image, articleType, artiste, dateDeParution) {
-        super(id, titre, prix, disponibilite, image, articleType);
+    constructor({artiste, dateDeParution, ...article}) {
+        super(article);
         this._artiste = artiste;
         this._dateDeParution = dateDeParution;
     }

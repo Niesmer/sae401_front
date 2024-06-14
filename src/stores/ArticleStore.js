@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction, values } from "mobx";
 import { API_URL_GET_PRODUCTS } from "./config";
 import { Article } from "./Article";
+import { Album } from "./Album";
+import { Livre } from "./Livre";
 
 export default class ArticleStore {
     _loading;_error;_articles;
@@ -17,7 +19,16 @@ export default class ArticleStore {
         try {
             let articles = await fetch(API_URL_GET_PRODUCTS).then((value)=> value.json())
             runInAction(() => {
-                this._articles = articles.map((article) => new Article(article));
+                this._articles = articles.map((article) => {
+                    switch (article.article_type){
+                        case 'livre':
+                            return new Livre(article);
+                        case 'musique':
+                            return new Album(article);
+                        default:
+                            return new Article(article);
+                    }
+                });
                 this._loading = false;
             });
         } catch (error) {
@@ -81,18 +92,12 @@ export default class ArticleStore {
         })
     }
 
-    async getArticle(id) {
-        let article = await fetch(`${API_URL_GET_PRODUCTS}/${id}`,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((value)=>value.json)
-        return article;
+    getArticle(id) {
+        return this._articles.find((article) => article.id === id);
     }
 
     async updateArticle(data) {
-        let article = this.article(data.id);
+        let article = this.getArticle(data.id);
         if (!article) {
             return { success: false, message: "Article inexistant" };
         } else {
