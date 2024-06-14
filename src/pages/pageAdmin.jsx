@@ -19,8 +19,8 @@ function PageAdmin(props) {
   };
   return (
     <div className="flex flex-col gap-4">
-      <button className="btn rounded-full w-full md:max-w-md sticky top-4 left-4" onClick={()=>handleBtnAdd()}>Ajouter un article</button>
-      <ul className="grid grid-flow-row gap-3 border rounded-lg bg-indigo-50 p-2">
+      <button className="btn rounded-full w-full md:max-w-72 sticky top-4 left-4" onClick={()=>handleBtnAdd()}>Ajouter un article</button>
+      <ul className="grid grid-flow-row gap-3 border rounded-3xl bg-indigo-50 p-2">
         <ArticleList></ArticleList>
       </ul>
       {visibleAdd && (

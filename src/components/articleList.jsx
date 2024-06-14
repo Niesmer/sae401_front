@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useArticleStore } from "../stores";
 import LigneArticle from "./LigneArticle";
 import Popup from "./Popup";
+import SearchBar from "./SearchBar";
 
 function formatString(str) {
+  if (typeof str !== "string") return "";
   let cleanedString = str.replace('_', '');
   let formattedString = cleanedString.charAt(0).toUpperCase() + cleanedString.slice(1);
   return formattedString;
@@ -26,6 +28,7 @@ function ArticleList() {
   }, [ArticleStore.articles]);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
 
   const handleBtnDel = (id) => {
     setSelectedId(id);
@@ -72,6 +75,7 @@ function ArticleList() {
     setVisibleDetails(false);
   };
 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSelectedArticle({
@@ -79,18 +83,27 @@ function ArticleList() {
       [name]: value,
     });
   };
+  const handleSearchChange = (value) => {
+    setSearchValue(value);
+};
+const filteredArticles = ArticleStore.articles.filter((article) => {
+  return keys.some((key) => article[key].toString().toLowerCase().includes(searchValue.toLowerCase()));
+});
 
   return (
     <>
+    <li className="flex justify-center md:justify-normal"><SearchBar onChange={handleSearchChange}></SearchBar></li>
       <li className="hidden md:block">
-      <ul className={`grid grid-flow-col auto-cols-[1fr]`}>
+      <ul className={`grid grid-flow-col auto-cols-[1fr] bg-indigo-500 text-white p-2 rounded-3xl`}>
+          
           {keys.map((key) => (
             <li className="text-center" key={key}>{formatString(key)}</li>
-          ))}
+          )) 
+          }
           <li className="text-center">Actions</li>
         </ul>
       </li>
-      {ArticleStore.articles.map((article) => (
+      {!searchValue ? ArticleStore.articles.map((article) => (
         <LigneArticle
           key={article.id}
           data={article}
@@ -98,7 +111,16 @@ function ArticleList() {
           handleBtnEdit={() => handleBtnEdit(article.id)}
           handleBtnDetails={() => handleBtnDetails(article.id)}
         />
-      ))}
+      )) :
+      filteredArticles.map((article) => (
+      <LigneArticle
+          key={article.id}
+          data={article}
+          handleBtnDel={() => handleBtnDel(article.id)}
+          handleBtnEdit={() => handleBtnEdit(article.id)}
+          handleBtnDetails={() => handleBtnDetails(article.id)}
+        /> ))
+      }
       {visibleDel && (
         <Popup
         action="Supprimer"
