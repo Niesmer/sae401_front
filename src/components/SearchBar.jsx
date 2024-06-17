@@ -16,7 +16,7 @@ const handleChange = (event) => {
   setSearchValue(event.target.value);
 };
   return (
-    <form onSubmit={handleSubmit} className="rounded-full text-lg border border-gray-400 py-1 px-6 my-2 max-w-lg grid grid-cols-[1fr_auto]">
+    <form onSubmit={handleSubmit} className="rounded-full md:w-2/3 w-full bg-indigo-50 text-lg border border-gray-400 py-1 px-6  grid grid-cols-[1fr_auto]">
       <input onChange={handleChange} className="border-0 bg-transparent focus:outline-0 w-full" type="search" placeholder="Search" name="search" aria-label="Search" minLength={nbCarMin} />
       <button>
         <FontAwesomeIcon icon={faMagnifyingGlass} />

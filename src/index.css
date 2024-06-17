@@ -29,7 +29,7 @@
     input,
     select,
     textarea {
-        @apply w-full border-2 border-gray-300 rounded focus:border-blue-500 p-1;
+        @apply w-full border focus:border-2 border-gray-300 rounded-full pl-4 focus:border-blue-500 p-1;
     }
     a {
         @apply text-blue-500 hover:underline;
