@@ -8,6 +8,10 @@ export class Article {
         this.articleType = article_type;
     }
 
+    static keys(){
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'article_type'];
+    }
+
     get id() {
         return this._id;
     }

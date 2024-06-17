@@ -20,8 +20,7 @@ function ArticleList() {
   
   useEffect(() => {
     if (ArticleStore.articles.length > 0) {
-      const firstArticle = ArticleStore.articles[0];
-      setKeys(Object.keys(firstArticle));
+      setKeys(Article.keys());
     }
   }, [ArticleStore.articles]);
   const [selectedId, setSelectedId] = useState(null);
@@ -78,6 +77,7 @@ function ArticleList() {
       {ArticleStore.articles.map((article) => (
         <LigneArticle
           key={article.id}
+          keys={keys}
           data={article}
           handleBtnDel={() => handleBtnDel(article.id)}
           handleBtnEdit={() => handleBtnEdit(article.id)}
