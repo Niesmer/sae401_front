@@ -91,15 +91,11 @@ export default class ArticleStore {
         })
     }
 
-    async getArticle(id) {
-        let article = await fetch(`${API_URL_GET_PRODUCTS}/${id}`,{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then((value)=>value.json)
-        return article;
-    }
+    
+        getArticle(id) {
+            return this._articles.find((article) => article.id === id);
+        }
+    
 
     async updateArticle(data) {
         let article = this.article(data.id);
