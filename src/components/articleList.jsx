@@ -4,6 +4,7 @@ import { useArticleStore } from "../stores";
 import LigneArticle from "./LigneArticle";
 import Popup from "./Popup";
 import PopupInfos from "./PopupInfos";
+import { Article } from "../stores/Article";
 
 function formatString(str) {
   let cleanedString = str.replace('_', '');
