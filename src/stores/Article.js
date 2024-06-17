@@ -19,6 +19,9 @@ export class Article {
         return this._id;
     }
 
+    static keys(){
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'articleType'];
+    }
     set id(id) {
         this._id = id;
         return this;

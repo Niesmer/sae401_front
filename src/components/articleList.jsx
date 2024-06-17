@@ -4,6 +4,7 @@ import { useArticleStore } from "../stores";
 import LigneArticle from "./LigneArticle";
 import Popup from "./Popup";
 import SearchBar from "./SearchBar";
+import { Article } from "../stores/Article";
 
 function formatString(str) {
   if (typeof str !== "string") return "";
@@ -22,8 +23,7 @@ function ArticleList() {
   
   useEffect(() => {
     if (ArticleStore.articles.length > 0) {
-      const firstArticle = ArticleStore.articles[0];
-      setKeys(Object.keys(firstArticle));
+      setKeys(Article.keys());
     }
   }, [ArticleStore.articles]);
   const [selectedId, setSelectedId] = useState(null);
@@ -106,6 +106,7 @@ const filteredArticles = ArticleStore.articles.filter((article) => {
       {!searchValue ? ArticleStore.articles.map((article) => (
         <LigneArticle
           key={article.id}
+          keys={keys}
           data={article}
           handleBtnDel={() => handleBtnDel(article.id)}
           handleBtnEdit={() => handleBtnEdit(article.id)}

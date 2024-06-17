@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction, values } from "mobx";
 import { API_URL_GET_PRODUCTS } from "./config";
 import { Article } from "./Article";
+import { Livre } from "./Livre";
+import { Album } from "./Album";
 
 export default class ArticleStore {
     _loading;_error;_articles;
@@ -17,7 +19,16 @@ export default class ArticleStore {
         try {
             let articles = await fetch(API_URL_GET_PRODUCTS).then((value)=> value.json())
             runInAction(() => {
-                this._articles = articles.map((article) => new Article(article));
+                this._articles = articles.map((article) => {
+                    switch (article.article_type){
+                        case 'livre':
+                            return new Livre(article);
+                        case 'musique':
+                            return new Album(article);
+                        default:
+                            return new Article(article);
+                    }
+                });
                 this._loading = false;
             });
         } catch (error) {
@@ -27,7 +38,6 @@ export default class ArticleStore {
             })
         }
     }
-
     
 
     async deleteArticle(id){
