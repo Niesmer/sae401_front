@@ -92,10 +92,48 @@ useEffect(() => {
   }
   const handleInputChangeAdd = (e) => {
     const { name, value } = e.target;
+    console.log(e.target);
+    console.log(name);
+    console.log(value);
     setNewArticle({
       ...newArticle,
       [name]: value,
+      
+      ['articleType']:(activeTab === 1 ? 'livre' : activeTab === 2 ? 'album' : 'article'),
     });
+    console.log(newArticle);
+  };
+
+  const handleAddArticle = () => {
+    
+   
+    let result;
+    switch (activeTab) {
+      case 1:
+        
+        result = ArticleStore.addArticle(new Livre(newArticle));
+        console.log("Livre ajouté:", newArticle);
+        break;
+      case 2:
+        
+        result = ArticleStore.addArticle(new Album(newArticle));
+        console.log("Album ajouté:", newArticle);
+        break;
+      case 3:
+        
+        result = ArticleStore.addArticle(new Article(newArticle));
+        console.log("Article ajouté:", newArticle);
+        break;
+      default:
+        result = { success: false, message: "Type d'article inconnu" };
+    }
+
+    if (result.success) {
+      setNewArticle({});
+      closePopupAdd();
+    } else {
+      setError(result.message);
+    }
   };
 
 
@@ -116,7 +154,7 @@ useEffect(() => {
   return (
     <>
       <li className="flex justify-center gap-2 flex-wrap w-full sticky top-4 md:flex-nowrap md:justify-between ">
-        <button className="btn rounded-full md:w-1/3 w-full md:max-w-72 " onClick={() => handleBtnAdd()}>Ajouter un article</button>
+        <button className="btn rounded-full md:w-1/3 w-full md:max-w-72" onClick={() => handleBtnAdd()}>Ajouter un article</button>
         <SearchBar onChange={handleSearchChange}></SearchBar>
       </li>
       <li className="hidden md:block">
@@ -212,9 +250,7 @@ useEffect(() => {
           action="Ajouter"
           onCancel={closePopupAdd}
           onConfirm={() => {
-            ArticleStore.addArticle();
-            console.log(newArticle);
-            closePopupAdd();
+            handleAddArticle()
           }}
         >
           <div className="flex border-b">
@@ -238,65 +274,23 @@ useEffect(() => {
         </button>
       </div>
       <div className="p-4">
-        {activeTab === 1 && (
-          <div>
-            <h2 className="text-xl font-bold mb-4">Ajouter un Livre</h2>
-            <ul className="flex flex-col gap-2">
-            {Livre.keys().filter(key => key !== '_articleType').map((key) => (
-              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
+      <ul className="flex flex-col gap-2">
+            {(activeTab === 1 ? Livre.keys() : activeTab === 2 ? Album.keys() : Article.keys()).filter(key => key !== 'articleType').map((key) => (
+              <li key={key} className={` grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4`}>
+                <label className={` md:text-right`} htmlFor={key}>{formatString(key)}:</label>
                 <input
                   type="text"
+                  className={``}
                   id={key}
                   name={key}
                   onChange={handleInputChangeAdd}
-                  
+                  value={key === "articleType" ? (activeTab === 1 ? "livre" : activeTab === 2 ? "album" : "article") : newArticle[key] || ""}
                 />
               </li>
             ))}
           </ul>
-          {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
-          </div>
-        )}
-        {activeTab === 2 && (
-          <div>
-            <h2 className="text-xl font-bold mb-4">Ajouter une Musique</h2>
-            <ul className="flex flex-col gap-2">
-            {Album.keys().filter(key => key !== '_articleType').map((key) => (
-              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
-                <input
-                  type="text"
-                  id={key}
-                  name={key}
-                  onChange={handleInputChangeAdd}
-                  
-                />
-              </li>
-            ))}
-          </ul>
-          </div>
-        )}
-        {activeTab === 3 && (
-          <div>
-            <h2 className="text-xl font-bold mb-4">Ajouter un autre Article</h2>
-            <ul className="flex flex-col gap-2">
-            {Article.keys().filter(key => key !== '_articleType').map((key) => (
-              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
-                <input
-                  type="text"
-                  id={key}
-                  name={key}
-                  onChange={handleInputChangeAdd}
-                  
-                />
-              </li>
-            ))}
-          </ul>
-          </div>
-        )}
       </div>
+      {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
         </Popup>
       )}
     </>

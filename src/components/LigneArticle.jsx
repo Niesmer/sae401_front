@@ -37,11 +37,12 @@ function LigneArticle({ data = {}, keys = null, handleBtnDel = () => { }, handle
               className="w-1/3 text-right pr-4 rounded-full"
               
             >
-              {isVisible ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretUp} className="rotate-180 transition-all"/>}
+              {isVisible ? <FontAwesomeIcon icon={faCaretUp} className="z-0"/> : <FontAwesomeIcon icon={faCaretUp} className="rotate-180 z-0 transition-all"/>}
             </button>
           </li>
         )}
-      <li className={`${isVisible ? 'max-h-96 p-2' : 'max-h-0 p-0'} transition-all md:py-3 md:max-h-none overflow-hidden md:h-auto grid grid-flow-row md:grid-flow-col md:auto-cols-[1fr] gap-4 border-t md:p-2`}>
+      <li className={`${isVisible ? 'max-h-96 p-2' : 'max-h-0 p-0'} transition-all md:py-3 md:max-h-none 
+      overflow-hidden md:h-auto grid grid-flow-row md:grid-flow-col md:auto-cols-[1fr] gap-4 border-t md:p-2`}>
         
 
 
