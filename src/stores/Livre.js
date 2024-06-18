@@ -1,17 +1,12 @@
 import { Article } from "./Article";
 
 export class Livre extends Article {
-    _auteur;
-    _ISBN;
-    _nbPages;
-    _dateDeParution;
-
-    constructor(id, titre, prix, disponibilite, image, articleType, auteur, ISBN, nbPages, dateDeParution) {
-        super(id, titre, prix, disponibilite, image, articleType);
-        this._auteur = auteur;
-        this._ISBN = ISBN;
-        this._nbPages = nbPages;
-        this._dateDeParution = dateDeParution;
+    constructor({auteur, ISBN, nbPages, dateDeParution,...article}) {
+        super(article);
+        this.Auteur = auteur;
+        this.ISBN = ISBN;
+        this.NbPages = nbPages;
+        this.DateDeParution = dateDeParution;
     }
 
     static keys(){
@@ -19,38 +14,38 @@ export class Livre extends Article {
     }
 
     getAuteur() {
-        return this._auteur;
+        return this.Auteur;
     }
 
     setAuteur(auteur) {
-        this._auteur = auteur;
+        this.Auteur = auteur;
         return this;
     }
 
     getISBN() {
-        return this._ISBN;
+        return this.ISBN;
     }
 
     setISBN(ISBN) {
-        this._ISBN = ISBN;
+        this.ISBN = ISBN;
         return this;
     }
 
     getNbPages() {
-        return this._nbPages;
+        return this.NbPages;
     }
 
     setNbPages(nbPages) {
-        this._nbPages = nbPages;
+        this.NbPages = nbPages;
         return this;
     }
 
     getDateDeParution() {
-        return this._dateDeParution;
+        return this.DateDeParution;
     }
 
     setDateDeParution(dateDeParution) {
-        this._dateDeParution = dateDeParution;
+        this.DateDeParution = dateDeParution;
         return this;
     }
 }

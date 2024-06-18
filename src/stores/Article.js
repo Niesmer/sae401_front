@@ -1,18 +1,15 @@
 export class Article {
-    _id;
-    _titre;
-    _prix;
-    _disponibilite;
-    _image;
-    _articleType;
-
     constructor({id, titre, prix, disponibilite, image, article_type}) {
-        this._id = id;
-        this._titre = titre;
-        this._prix = prix;
-        this._disponibilite = disponibilite;
-        this._image = image;
-        this._articleType = article_type;
+        this.id = id;
+        this.titre = titre;
+        this.prix = prix;
+        this.disponibilite = disponibilite;
+        this.image = image;
+        this.articleType = article_type;
+    }
+
+    static keys(){
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'article_type'];
     }
 
     get id() {
