@@ -11,7 +11,7 @@ function Popup({action, onConfirm={}, onCancel ={}, children, hasBackground=true
     
     <>
     {hasBackground &&(
-      <div className="backdrop-blur	w-screen h-screen absolute top-0 left-0 z-5"></div>
+      <div className="backdrop-blur	w-screen h-screen fixed top-0 left-0 z-5"></div>
       
     )}
     

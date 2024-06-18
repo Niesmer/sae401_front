@@ -5,6 +5,8 @@ import LigneArticle from "./LigneArticle";
 import Popup from "./Popup";
 import SearchBar from "./SearchBar";
 import { Article } from "../stores/Article";
+import { Livre } from "../stores/Livre";
+import { Album } from "../stores/Album";
 
 function formatString(str) {
   if (typeof str !== "string") return "";
@@ -20,17 +22,21 @@ function ArticleList() {
   const [visibleDetails, setVisibleDetails] = useState(false);
   const [error, setError] = useState(null);
   const [keys, setKeys] = useState([]);
-
-  useEffect(() => {
-    if (ArticleStore.articles.length > 0) {
-      setKeys(Article.keys());
-    }
-  }, [ArticleStore.articles]);
+  const [newArticle, setNewArticle] = useState({});
   const [selectedId, setSelectedId] = useState(null);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [visibleAdd, setVisibleAdd] = useState(false);
+  const [activeTab, setActiveTab] = useState(1);
 
+  const handleTabClick = (tabIndex) => {
+    setActiveTab(tabIndex);
+  };
+useEffect(() => {
+    if (ArticleStore.articles.length > 0) {
+      setKeys(Article.keys());
+    }
+  }, [ArticleStore.articles]);
 
   const handleBtnDel = (id) => {
     setSelectedId(id);
@@ -85,8 +91,11 @@ function ArticleList() {
     setVisibleAdd(false);
   }
   const handleInputChangeAdd = (e) => {
-
-
+    const { name, value } = e.target;
+    setNewArticle({
+      ...newArticle,
+      [name]: value,
+    });
   };
 
 
@@ -190,7 +199,7 @@ function ArticleList() {
           <h3>{`Détails de l'article ${selectedId}`}</h3>
           <ul>
             {Object.keys(selectedArticle).map((key) => (
-              <li key={key} className="grid grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
                 <div className="md:text-right"><strong>{formatString(key)} :</strong></div>
                 <div>{selectedArticle[key]}</div>
               </li>
@@ -204,10 +213,90 @@ function ArticleList() {
           onCancel={closePopupAdd}
           onConfirm={() => {
             ArticleStore.addArticle();
+            console.log(newArticle);
             closePopupAdd();
           }}
         >
-          <p></p>
+          <div className="flex border-b">
+        <button
+          onClick={() => handleTabClick(1)}
+          className={`py-2 px-4 ${activeTab === 1 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
+        >
+          Livre
+        </button>
+        <button
+          onClick={() => handleTabClick(2)}
+          className={`py-2 px-4 ${activeTab === 2 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
+        >
+          Musique
+        </button>
+        <button
+          onClick={() => handleTabClick(3)}
+          className={`py-2 px-4 ${activeTab === 3 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
+        >
+          Autre
+        </button>
+      </div>
+      <div className="p-4">
+        {activeTab === 1 && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Ajouter un Livre</h2>
+            <ul className="flex flex-col gap-2">
+            {Livre.keys().filter(key => key !== '_articleType').map((key) => (
+              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
+                <input
+                  type="text"
+                  id={key}
+                  name={key}
+                  onChange={handleInputChangeAdd}
+                  
+                />
+              </li>
+            ))}
+          </ul>
+          {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
+          </div>
+        )}
+        {activeTab === 2 && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Ajouter une Musique</h2>
+            <ul className="flex flex-col gap-2">
+            {Album.keys().filter(key => key !== '_articleType').map((key) => (
+              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
+                <input
+                  type="text"
+                  id={key}
+                  name={key}
+                  onChange={handleInputChangeAdd}
+                  
+                />
+              </li>
+            ))}
+          </ul>
+          </div>
+        )}
+        {activeTab === 3 && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Ajouter un autre Article</h2>
+            <ul className="flex flex-col gap-2">
+            {Article.keys().filter(key => key !== '_articleType').map((key) => (
+              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
+                <input
+                  type="text"
+                  id={key}
+                  name={key}
+                  onChange={handleInputChangeAdd}
+                  
+                />
+              </li>
+            ))}
+          </ul>
+          </div>
+        )}
+      </div>
         </Popup>
       )}
     </>

@@ -14,6 +14,10 @@ export class Livre extends Article {
         this._dateDeParution = dateDeParution;
     }
 
+    static keys(){
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'articleType', 'auteur','ISBN','nbPages','dateDeParution'];
+    }
+
     getAuteur() {
         return this._auteur;
     }

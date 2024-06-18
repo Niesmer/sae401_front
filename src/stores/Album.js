@@ -10,6 +10,10 @@ export class Album extends Article {
         this._dateDeParution = dateDeParution;
     }
 
+    static keys(){
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'articleType','artiste','dateDeParution'];
+    }
+
     getArtiste() {
         return this._artiste;
     }
