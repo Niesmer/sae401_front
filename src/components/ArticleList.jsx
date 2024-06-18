@@ -153,7 +153,7 @@ useEffect(() => {
 
   return (
     <>
-      <li className="flex justify-center gap-2 flex-wrap w-full sticky top-4 md:flex-nowrap md:justify-between ">
+      <li className="flex justify-center gap-2 flex-wrap w-full sticky z-[1] top-4 md:flex-nowrap md:justify-between ">
         <button className="btn rounded-full md:w-1/3 w-full md:max-w-72" onClick={() => handleBtnAdd()}>Ajouter un article</button>
         <SearchBar onChange={handleSearchChange}></SearchBar>
       </li>
@@ -253,7 +253,7 @@ useEffect(() => {
             handleAddArticle()
           }}
         >
-          <div className="flex border-b">
+          <div className="flex border-b sticky -top-6 bg-white ">
         <button
           onClick={() => handleTabClick(1)}
           className={`py-2 px-4 ${activeTab === 1 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
@@ -275,7 +275,7 @@ useEffect(() => {
       </div>
       <div className="p-4">
       <ul className="flex flex-col gap-2">
-            {(activeTab === 1 ? Livre.keys() : activeTab === 2 ? Album.keys() : Article.keys()).filter(key => key !== 'articleType').map((key) => (
+            {(activeTab === 1 ? Livre.keys() : activeTab === 2 ? Album.keys() : Article.keys()).filter(key => key !== 'articleType' && key !== 'id').map((key) => (
               <li key={key} className={` grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4`}>
                 <label className={` md:text-right`} htmlFor={key}>{formatString(key)}:</label>
                 <input
