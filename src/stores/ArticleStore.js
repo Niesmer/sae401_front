@@ -88,7 +88,7 @@ export default class ArticleStore {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body:article,
+            body:JSON.stringify(article),
         })
     }
 
