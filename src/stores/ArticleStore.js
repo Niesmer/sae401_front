@@ -18,7 +18,10 @@ export default class ArticleStore {
     async loadArticles(){
         try {
             let articles = await fetch(API_URL_GET_PRODUCTS).then((value)=> value.json())
+            console.log(this._articles);
+
             runInAction(() => {
+                console.log(this.articles)
                 this._articles = articles.map((article) => {
                     switch (article.article_type){
                         case 'livre':
@@ -29,8 +32,12 @@ export default class ArticleStore {
                             return new Article(article);
                     }
                 });
+
                 this._loading = false;
             });
+
+            console.log(this._articles);
+
         } catch (error) {
             runInAction(()=> {
                 this._error = error;

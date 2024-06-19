@@ -3,49 +3,49 @@ import { Article } from "./Article";
 export class Livre extends Article {
     constructor({auteur, ISBN, nbPages, dateDeParution,...article}) {
         super(article);
-        this.Auteur = auteur;
-        this.ISBN = ISBN;
-        this.NbPages = nbPages;
-        this.DateDeParution = dateDeParution;
+        this._auteur = auteur;
+        this._ISBN = ISBN;
+        this._nbPages = nbPages;
+        this._dateDeParution = dateDeParution;
     }
 
     static keys(){
-        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'articleType', 'auteur','ISBN','nbPages','dateDeParution'];
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'article_type', 'auteur','ISBN','nbPages','dateDeParution'];
     }
 
     getAuteur() {
-        return this.Auteur;
+        return this._auteur;
     }
 
     setAuteur(auteur) {
-        this.Auteur = auteur;
+        this._auteur = auteur;
         return this;
     }
 
     getISBN() {
-        return this.ISBN;
+        return this._ISBN;
     }
 
     setISBN(ISBN) {
-        this.ISBN = ISBN;
+        this._ISBN = ISBN;
         return this;
     }
 
     getNbPages() {
-        return this.NbPages;
+        return this._nbPages;
     }
 
     setNbPages(nbPages) {
-        this.NbPages = nbPages;
+        this._nbPages = nbPages;
         return this;
     }
 
     getDateDeParution() {
-        return this.DateDeParution;
+        return this._dateDeParution;
     }
 
     setDateDeParution(dateDeParution) {
-        this.DateDeParution = dateDeParution;
+        this._dateDeParution = dateDeParution;
         return this;
     }
 }

@@ -8,12 +8,6 @@ import { Article } from "../stores/Article";
 import { Livre } from "../stores/Livre";
 import { Album } from "../stores/Album";
 
-function formatString(str) {
-  if (typeof str !== "string") return "";
-  let cleanedString = str.replace('_', '');
-  let formattedString = cleanedString.charAt(0).toUpperCase() + cleanedString.slice(1);
-  return formattedString;
-}
 
 function ArticleList() {
   const ArticleStore = useArticleStore();
@@ -66,7 +60,9 @@ useEffect(() => {
 
   const handleDelete = (e) => {
     const result = ArticleStore.deleteArticle(selectedId);
-    result.success ? closePopupDel() : setError(result.message);
+    console.log(result);
+    console.log(ArticleStore.error);
+    ArticleStore.error ? setError(result.message)  : closePopupDel()  ;
   }
 
 
@@ -77,10 +73,12 @@ useEffect(() => {
 
   const closePopupEdit = () => {
     setVisibleEdit(false);
+    setError(''); 
   };
 
   const closePopupDetails = () => {
     setVisibleDetails(false);
+    setError(''); 
   };
 
   const handleBtnAdd = () => {
@@ -89,51 +87,44 @@ useEffect(() => {
 
   const closePopupAdd = () => {
     setVisibleAdd(false);
+    setNewArticle({});
+    
   }
   const handleInputChangeAdd = (e) => {
     const { name, value } = e.target;
-    console.log(e.target);
-    console.log(name);
-    console.log(value);
+    
     setNewArticle({
       ...newArticle,
       [name]: value,
       
-      ['articleType']:(activeTab === 1 ? 'livre' : activeTab === 2 ? 'album' : 'article'),
+      ['article_type']:(activeTab === 1 ? 'livre' : activeTab === 2 ? 'album' : 'article'),
     });
-    console.log(newArticle);
   };
 
   const handleAddArticle = () => {
-    
-   
     let result;
+    console.log(newArticle);
     switch (activeTab) {
       case 1:
+        result = ArticleStore.addArticle(newArticle);
         
-        result = ArticleStore.addArticle(new Livre(newArticle));
-        console.log("Livre ajouté:", newArticle);
         break;
       case 2:
         
-        result = ArticleStore.addArticle(new Album(newArticle));
-        console.log("Album ajouté:", newArticle);
+        result = ArticleStore.addArticle(newArticle);
         break;
       case 3:
         
-        result = ArticleStore.addArticle(new Article(newArticle));
-        console.log("Article ajouté:", newArticle);
+        result = ArticleStore.addArticle(newArticle);
         break;
       default:
         result = { success: false, message: "Type d'article inconnu" };
     }
-
-    if (result.success) {
-      setNewArticle({});
-      closePopupAdd();
-    } else {
-      setError(result.message);
-    }
+    ArticleStore.error
+     ? 
+    setError(result.message)
+      : closePopupAdd();
+    
   };
 
 
@@ -161,7 +152,7 @@ useEffect(() => {
         <ul className={`grid grid-flow-col auto-cols-[1fr] bg-indigo-500 text-white p-2 rounded-3xl`}>
 
           {keys.map((key) => (
-            <li className="text-center" key={key}>{formatString(key)}</li>
+            <li className="text-center" key={key}>{key}</li>
           ))
           }
           <li className="text-center">Actions</li>
@@ -205,16 +196,16 @@ useEffect(() => {
         <Popup
           action="Enregistrer"
           onCancel={closePopupEdit}
-          zIndex={20}
+          zIndex={"z-20"}
           onConfirm={() => {
             handleSubmit();
           }}
         >
           <h3>{`Modifier l'article ${selectedId}`}</h3>
           <ul className="flex flex-col gap-2">
-            {Object.keys(selectedArticle).filter(key => key !== '_articleType').map((key) => (
+            {Object.keys(selectedArticle).filter(key => key !== '_article_type').map((key) => (
               <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <label className="md:text-right" htmlFor={key}>{formatString(key)}:</label>
+                <label className="md:text-right" htmlFor={key}>{key}:</label>
                 <input
                   type="text"
                   id={key}
@@ -238,7 +229,7 @@ useEffect(() => {
           <ul>
             {Object.keys(selectedArticle).map((key) => (
               <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <div className="md:text-right"><strong>{formatString(key)} :</strong></div>
+                <div className="md:text-right"><strong>{key} :</strong></div>
                 <div>{selectedArticle[key]}</div>
               </li>
             ))}
@@ -275,16 +266,16 @@ useEffect(() => {
       </div>
       <div className="p-4">
       <ul className="flex flex-col gap-2">
-            {(activeTab === 1 ? Livre.keys() : activeTab === 2 ? Album.keys() : Article.keys()).filter(key => key !== 'articleType' && key !== 'id').map((key) => (
+            {(activeTab === 1 ? Livre.keys() : activeTab === 2 ? Album.keys() : Article.keys()).filter(key => key !== 'article_type' && key !== 'id').map((key) => (
               <li key={key} className={` grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4`}>
-                <label className={` md:text-right`} htmlFor={key}>{formatString(key)}:</label>
+                <label className={`text-left md:text-right`} htmlFor={key}>{key}:</label>
                 <input
                   type="text"
                   className={``}
                   id={key}
                   name={key}
                   onChange={handleInputChangeAdd}
-                  value={key === "articleType" ? (activeTab === 1 ? "livre" : activeTab === 2 ? "album" : "article") : newArticle[key] || ""}
+                  value={key === "article_type" ? (activeTab === 1 ? "livre" : activeTab === 2 ? "album" : "article") : newArticle[key] || ""}
                 />
               </li>
             ))}

@@ -1,8 +1,7 @@
 import { Article } from "./Article";
 
 export class Album extends Article {
-    _artiste;
-    _dateDeParution;
+    
 
     constructor({artiste, dateDeParution, ...article}) {
         super(article);
@@ -11,7 +10,7 @@ export class Album extends Article {
     }
 
     static keys(){
-        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'articleType','artiste','dateDeParution'];
+        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'article_type','artiste','dateDeParution'];
     }
 
     getArtiste() {

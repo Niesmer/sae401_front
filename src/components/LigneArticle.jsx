@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown, faPenToSquare, faCircleInfo,faTrash } from '@fortawesome/free-solid-svg-icons';
 
-function formatString(str) {
-  let cleanedString = str.replace('_', '');
-  let formattedString = cleanedString.charAt(0).toUpperCase() + cleanedString.slice(1);
-  return formattedString;
-}
+
 
 function LigneArticle({ data = {}, keys = null, handleBtnDel = () => { }, handleBtnEdit = () => { }, handleBtnDetails = () => { } }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -48,7 +44,7 @@ function LigneArticle({ data = {}, keys = null, handleBtnDel = () => { }, handle
 
         {keys.map((key) => (
           <div key={key} className={` w-full md:w-auto max-w-25 overflow-hidden pl-4 flex gap-2`}>
-            <span className="block md:hidden font-bold">{formatString(key)}:</span>
+            <span className="block md:hidden font-bold">{key}:</span>
             <p className="text-ellipsis overflow-hidden">
               {data[key]}{" "}
             </p>

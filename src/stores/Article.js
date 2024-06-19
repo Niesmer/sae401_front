@@ -1,11 +1,11 @@
 export class Article {
     constructor({id, titre, prix, disponibilite, image, article_type}) {
-        this.id = id;
-        this.titre = titre;
-        this.prix = prix;
-        this.disponibilite = disponibilite;
-        this.image = image;
-        this.articleType = article_type;
+        this._id = id;
+        this._titre = titre;
+        this._prix = prix;
+        this._disponibilite = disponibilite;
+        this._image = image;
+        this._article_type = article_type;
     }
 
     static keys(){
@@ -16,11 +16,9 @@ export class Article {
         return this._id;
     }
 
-    static keys(){
-        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'articleType'];
-    }
+    
     set id(id) {
-        this._id = id;
+        this.id = id;
         return this;
     }
 
@@ -29,7 +27,7 @@ export class Article {
     }
 
     set titre(titre) {
-        this._titre = titre;
+        this.titre = titre;
         return this;
     }
 
@@ -38,7 +36,7 @@ export class Article {
     }
 
     set prix(prix) {
-        this._prix = prix;
+        this.prix = prix;
         return this;
     }
 
@@ -47,7 +45,7 @@ export class Article {
     }
 
     set disponibilite(disponibilite) {
-        this._disponibilite = disponibilite;
+        this.disponibilite = disponibilite;
         return this;
     }
 
@@ -56,16 +54,16 @@ export class Article {
     }
 
     set image(image) {
-        this._image = image;
+        this.image = image;
         return this;
     }
 
-    get articleType() {
-        return this._articleType;
+    get article_type() {
+        return this._article_type;
     }
 
-    set articleType(articleType) {
-        this._articleType = articleType;
+    set article_type(articleType) {
+        this._article_type = articleType;
         return this;
     }
 }
