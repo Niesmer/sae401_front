@@ -165,7 +165,7 @@ function ArticleList() {
           <ul>
             {Object.keys(selectedArticle).map((key) => (
               <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <div className="md:text-right"><strong>{key} :</strong></div>
+                <div className="md:text-right"><strong>{key.replace('_','')} :</strong></div>
                 <div>{selectedArticle[key]}</div>
               </li>
             ))}

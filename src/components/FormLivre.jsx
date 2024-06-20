@@ -31,15 +31,15 @@ function FormLivre({ idArticle = 0, onCancel }) {
         <form onSubmit={handleSubmit}>
             <ul className="flex flex-col gap-2">
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="titre">titre * :</label>
+                    <label className="text-left md:text-right before:content-['*'] before:text-red-500" htmlFor="titre">titre :</label>
                     <input type="text" className="" id="titre" required name="titre" defaultValue={data ? data._titre : ``} />
                 </li>
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label class="text-left md:text-right" htmlFor="prix">prix * :</label>
-                    <input type="number" className="" pattern="^[1-9]\d*(\.\d+)?$" min="0" id="prix" required name="prix" defaultValue={data ? data._prix : ``} />
+                    <label className="text-left md:text-right before:content-['*'] before:text-red-500" htmlFor="prix">prix :</label>
+                    <input type="number" className="" min="0" id="prix" required name="prix" defaultValue={data ? data._prix : ``} />
                 </li>
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label class="text-left md:text-right" htmlFor="disponibilite">disponibilite * :</label>
+                    <label className="text-left md:text-right before:content-['*'] before:text-red-500" htmlFor="disponibilite">disponibilite :</label>
                     <input type="number" className="" id="disponibilite" min="0" required name="disponibilite" defaultValue={data ? data._disponibilite : ``} />
                 </li>
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
@@ -51,11 +51,11 @@ function FormLivre({ idArticle = 0, onCancel }) {
                     <input type="text" className="" id="auteur" name="auteur" defaultValue={data ? data._auteur : ``} />
                 </li>
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="ISBN">ISBN * :</label>
+                    <label className="text-left md:text-right before:content-['*'] before:text-red-500" htmlFor="ISBN">ISBN :</label>
                     <input type="number" className="" minLength="10" maxLength="13" id="ISBN" title="Veuillez entrer un nombre positif." required name="ISBN" defaultValue={data ? data._ISBN : ``}/>
                 </li>
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="nbPages">nbPages * :</label>
+                    <label className="text-left md:text-right before:content-['*'] before:text-red-500" htmlFor="nbPages">nbPages :</label>
                     <input type="number" className="" min="0" id="nbPages" required name="nbPages" defaultValue={data ? data._nbPages : ``} />
                 </li>
                 <li className=" grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
