@@ -29,6 +29,9 @@ function FormArticle({ idArticle = 0, onCancel }) {
 
 
     return (
+        <>
+        <h2>{data ? `Modifier l'article ${idArticle}` : "Ajouter un Article"}</h2>
+
         <form onSubmit={handleSubmit}>
             <ul className="flex flex-col gap-2">
                 <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
@@ -53,6 +56,7 @@ function FormArticle({ idArticle = 0, onCancel }) {
                 </li>
             </ul>
         </form>
+        </>
     );
 }
 
