@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useArticleStore } from "../stores";
 
 
-function Popup({action, onConfirm={}, onCancel ={}, children, hasBackground=true, zIndex="z-10"}) {
+function Popup({action="Oui", onConfirm=()=>{}, onCancel =()=>{}, children, hasBackground=true, zIndex="z-10"}) {
 
   
 

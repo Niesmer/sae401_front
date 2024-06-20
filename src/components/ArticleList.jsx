@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import { Article } from "../stores/Article";
 import { Livre } from "../stores/Livre";
 import { Album } from "../stores/Album";
+import FormFactory from "./FormFactory";
 
 
 function ArticleList() {
@@ -26,7 +27,7 @@ function ArticleList() {
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
   };
-useEffect(() => {
+  useEffect(() => {
     if (ArticleStore.articles.length > 0) {
       setKeys(Article.keys());
     }
@@ -50,35 +51,22 @@ useEffect(() => {
     setVisibleDetails(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const dataUpdated = Object.fromEntries(new FormData(e.target));
-    console.log(dataUpdated);
-    const result = ArticleStore.updateArticle({ selectedId, ...dataUpdated });
-    result.success ? closePopupEdit() : setError(result.message);
-  }
-
   const handleDelete = (e) => {
     const result = ArticleStore.deleteArticle(selectedId);
-    console.log(result);
-    console.log(ArticleStore.error);
-    ArticleStore.error ? setError(result.message)  : closePopupDel()  ;
+    ArticleStore.error ? setError(result.message) : closePopupDel();
   }
-
-
-
   const closePopupDel = () => {
     setVisibleDel(false);
   };
 
   const closePopupEdit = () => {
     setVisibleEdit(false);
-    setError(''); 
+    setError('');
   };
 
   const closePopupDetails = () => {
     setVisibleDetails(false);
-    setError(''); 
+    setError('');
   };
 
   const handleBtnAdd = () => {
@@ -88,56 +76,23 @@ useEffect(() => {
   const closePopupAdd = () => {
     setVisibleAdd(false);
     setNewArticle({});
-    
+
   }
   const handleInputChangeAdd = (e) => {
     const { name, value } = e.target;
-    
+
     setNewArticle({
       ...newArticle,
       [name]: value,
-      
-      ['article_type']:(activeTab === 1 ? 'livre' : activeTab === 2 ? 'album' : 'article'),
+
+      ['article_type']: (activeTab === 1 ? 'livre' : activeTab === 2 ? 'album' : 'article'),
     });
   };
 
-  const handleAddArticle = () => {
-    let result;
-    console.log(newArticle);
-    switch (activeTab) {
-      case 1:
-        result = ArticleStore.addArticle(newArticle);
-        
-        break;
-      case 2:
-        
-        result = ArticleStore.addArticle(newArticle);
-        break;
-      case 3:
-        
-        result = ArticleStore.addArticle(newArticle);
-        break;
-      default:
-        result = { success: false, message: "Type d'article inconnu" };
-    }
-    ArticleStore.error
-     ? 
-    setError(result.message)
-      : closePopupAdd();
-    
-  };
-
-
-  const handleInputChangeEdit = (e) => {
-    const { name, value } = e.target;
-    setSelectedArticle({
-      ...selectedArticle,
-      [name]: value,
-    });
-  };
   const handleSearchChange = (value) => {
     setSearchValue(value);
   };
+  
   const filteredArticles = ArticleStore.articles.filter((article) => {
     return keys.some((key) => article[key].toString().toLowerCase().includes(searchValue.toLowerCase()));
   });
@@ -184,8 +139,7 @@ useEffect(() => {
           onConfirm={() => {
             handleDelete();
 
-          }}
-        >
+          }}>
           <div className="flex flex-col justify-center"><h3>Supprimer l'article {selectedId}</h3>
             <p>Voulez-vous supprimer l'article {selectedId} ?</p></div>
           {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
@@ -193,38 +147,20 @@ useEffect(() => {
         </Popup>
       )}
       {visibleEdit && (
-        <Popup
-          action="Enregistrer"
-          onCancel={closePopupEdit}
-          zIndex={"z-20"}
-          onConfirm={() => {
-            handleSubmit();
-          }}
-        >
-          <h3>{`Modifier l'article ${selectedId}`}</h3>
-          <ul className="flex flex-col gap-2">
-            {Object.keys(selectedArticle).filter(key => key !== '_article_type').map((key) => (
-              <li key={key} className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                <label className="md:text-right" htmlFor={key}>{key}:</label>
-                <input
-                  type="text"
-                  id={key}
-                  name={key}
-                  value={selectedArticle[key]}
-                  onChange={handleInputChangeEdit}
-                  
-                />
-              </li>
-            ))}
-          </ul>
-          {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
+        <Popup>
+          <FormFactory
+            closePopup={closePopupEdit}
+            idArticle={selectedId}
 
+            typeArticle={selectedArticle.article_type}
+          ></FormFactory>
         </Popup>
+
       )}
       {visibleDetails && (
         <Popup onCancel={closePopupDetails}
           onConfirm={() => handleBtnEdit(selectedId)}
-          action={"Modifier"}>
+          action="Modifier">
           <h3>{`Détails de l'article ${selectedId}`}</h3>
           <ul>
             {Object.keys(selectedArticle).map((key) => (
@@ -237,51 +173,35 @@ useEffect(() => {
         </Popup>
       )}
       {visibleAdd && (
-        <Popup
-          action="Ajouter"
-          onCancel={closePopupAdd}
-          onConfirm={() => {
-            handleAddArticle()
-          }}
-        >
+        <Popup>
           <div className="flex border-b sticky -top-6 bg-white ">
-        <button
-          onClick={() => handleTabClick(1)}
-          className={`py-2 px-4 ${activeTab === 1 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
-        >
-          Livre
-        </button>
-        <button
-          onClick={() => handleTabClick(2)}
-          className={`py-2 px-4 ${activeTab === 2 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
-        >
-          Musique
-        </button>
-        <button
-          onClick={() => handleTabClick(3)}
-          className={`py-2 px-4 ${activeTab === 3 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
-        >
-          Autre
-        </button>
-      </div>
-      <div className="p-4">
-      <ul className="flex flex-col gap-2">
-            {(activeTab === 1 ? Livre.keys() : activeTab === 2 ? Album.keys() : Article.keys()).filter(key => key !== 'article_type' && key !== 'id').map((key) => (
-              <li key={key} className={` grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4`}>
-                <label className={`text-left md:text-right`} htmlFor={key}>{key}:</label>
-                <input
-                  type="text"
-                  className={``}
-                  id={key}
-                  name={key}
-                  onChange={handleInputChangeAdd}
-                  value={key === "article_type" ? (activeTab === 1 ? "livre" : activeTab === 2 ? "album" : "article") : newArticle[key] || ""}
-                />
-              </li>
-            ))}
-          </ul>
-      </div>
-      {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
+            <button
+              onClick={() => handleTabClick(1)}
+              className={`py-2 px-4 ${activeTab === 1 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
+            >
+              Livre
+            </button>
+            <button
+              onClick={() => handleTabClick(2)}
+              className={`py-2 px-4 ${activeTab === 2 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
+            >
+              Musique
+            </button>
+            <button
+              onClick={() => handleTabClick(3)}
+              className={`py-2 px-4 ${activeTab === 3 ? "border-b-2 border-indigo-500 text-indigo-500" : "text-gray-500"}`}
+            >
+              Autre
+            </button>
+          </div>
+          <div className="p-4">
+            <FormFactory
+              closePopup={closePopupAdd}
+              typeArticle={activeTab === 1 ? "livre" : activeTab === 2 ? "musique" : "article"}>
+            </FormFactory>
+
+          </div>
+          {error ? (<p className="text-red-600 et col-span-2">{error}</p>) : (<p></p>)}
         </Popup>
       )}
     </>
