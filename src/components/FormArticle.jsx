@@ -30,7 +30,7 @@ function FormArticle({ idArticle = 0, onCancel }) {
 
     return (
         <>
-        <h2>{data ? `Modifier l'article ${idArticle}` : "Ajouter un Article"}</h2>
+        <h2 className="text-center font-bold text-lg p-4">{data ? `Modifier l'article ${idArticle}` : "Ajouter un Article"}</h2>
 
         <form onSubmit={handleSubmit}>
             <ul className="flex flex-col gap-2">
