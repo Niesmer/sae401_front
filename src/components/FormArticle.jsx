@@ -32,19 +32,19 @@ function FormArticle({ idArticle = 0, onCancel }) {
         <form onSubmit={handleSubmit}>
             <ul className="flex flex-col gap-2">
                 <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="titre">titre : </label>
-                    <input type="text" className="" id="titre" name="titre" defaultValue={data ? data.titre : ``} />
+                    <label className="text-left md:text-right" htmlFor="titre">titre * :</label>
+                    <input type="text" className="" id="titre" name="titre" required defaultValue={data ? data.titre : ``} />
                 </li>
                 <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="prix">prix : </label>
-                    <input type="number" className="" id="prix" name="prix" defaultValue={data ? data.prix : ``} />
+                    <label className="text-left md:text-right" htmlFor="prix">prix * :</label>
+                    <input type="number" className="" id="prix" min="0" name="prix" required defaultValue={data ? data.prix : ``} />
                 </li>
                 <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="disponibilite">disponibilite : </label>
-                    <input type="number" className="" id="disponibilite" name="disponibilite" defaultValue={data ? data.disponibilite : ``} />
+                    <label className="text-left md:text-right" htmlFor="disponibilite">disponibilite * :</label>
+                    <input type="number" className="" id="disponibilite" min="0" required pattern='{0,9}' name="disponibilite" defaultValue={data ? data.disponibilite : ``} />
                 </li>
                 <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
-                    <label className="text-left md:text-right" htmlFor="image">image : </label>
+                    <label className="text-left md:text-right" htmlFor="image">image :</label>
                     <input type="text" className="" id="image" name="image" defaultValue={data ? data.image : ``} />
                 </li>
                 <li className="grid grid-rows-2 grid-cols-1 md:grid-cols-2 md:grid-rows-1 gap-4">
