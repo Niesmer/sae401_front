@@ -19,7 +19,7 @@ function Popup({action="Oui", onConfirm=()=>{}, onCancel =()=>{}, children, hasB
       {children}
       <div className="grid grid-rows-2 grid-cols-1 md:grid-cols-2 md:grid-rows-1 gap-4">
         <button className="btn w-full rounded-full" title="confirm" onClick={onConfirm}>{action}</button>
-        <button className="btn w-full rounded-full bg-white border-gray-200 text-black border" title="cancel" onClick={onCancel}>Annuler</button>
+        <button className="btn w-full rounded-full" title="cancel" onClick={onCancel}>Annuler</button>
       </div>
     </div>
 </>
