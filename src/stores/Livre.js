@@ -1,16 +1,12 @@
 import { Article } from "./Article";
 
 export class Livre extends Article {
-    constructor({auteur, ISBN, nbPages, dateDeParution,...article}) {
+    constructor({ auteur, ISBN, nbPages, dateDeParution, ...article }) {
         super(article);
-        this._auteur = auteur;
-        this._ISBN = ISBN;
-        this._nbPages = nbPages;
-        this._dateDeParution = dateDeParution;
-    }
-
-    static keys(){
-        return ['id', 'titre', 'prix', 'disponibilite', 'image', 'article_type', 'auteur','ISBN','nbPages','dateDeParution'];
+        this.Auteur = auteur;
+        this.ISBN = ISBN;
+        this.NbPages = nbPages;
+        this.DateDeParution = dateDeParution;
     }
 
     getAuteur() {
@@ -45,7 +41,7 @@ export class Livre extends Article {
     }
 
     setDateDeParution(dateDeParution) {
-        this._dateDeParution = dateDeParution;
+        this.DateDeParution = dateDeParution;
         return this;
     }
 }
