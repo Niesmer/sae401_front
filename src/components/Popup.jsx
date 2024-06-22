@@ -30,8 +30,8 @@ function Popup({
           )}
           {buttons && (
             <button
-              className="btn w-full rounded-full"
-              title="cancel"
+            className="btn w-full rounded-full bg-white border-gray-200 text-black border"
+            title="cancel"
               onClick={onCancel}
             >
               Annuler

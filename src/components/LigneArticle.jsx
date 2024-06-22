@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretUp,

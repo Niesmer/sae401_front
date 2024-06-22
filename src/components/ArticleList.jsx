@@ -51,6 +51,7 @@ function ArticleList() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     ArticleStore.error = null;
+    setError(null)
     setLoading(true);
     const formData = Object.fromEntries(new FormData(e.target));
     selectedPopup === "add"
@@ -65,12 +66,11 @@ function ArticleList() {
     }
   };
 
-  const filteredArticles = ArticleStore.articles.filter((article) => {
-    return keys.some((key) => article[key].toString().toLowerCase().includes(searchValue.toLowerCase()));
-  });
+ 
 
   const handleCancel = () => {
     setSelectedPopup(null);
+    setError(null);
     ArticleStore.error = null;
   };
 
@@ -107,7 +107,7 @@ function ArticleList() {
           setPopupType={setSelectedPopup}
         />
       )) : 
-      filteredArticles.map((article) => (
+      ArticleStore.articles.filter((article)=> article.id.toString().includes(searchValue) || article.titre.toLowerCase().includes(searchValue.toLowerCase())).map((article) => (
         <LigneArticle
           key={article.id}
           keys={keys}
@@ -126,6 +126,9 @@ function ArticleList() {
         loading={loading}
         error={ArticleStore.error?.toString()}
       />
+      {error &&(
+        <p className="text-red-500 bg-red-300 p-4 rounded-md">{error}</p>
+      )}
     </>
   );
 }

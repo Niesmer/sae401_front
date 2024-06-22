@@ -55,7 +55,7 @@ export default class ArticleStore {
     }
 
     getArticle(id) {
-        return this._articles.find((article) => article.id == id);
+        return this._articles.find((article) => article.id === id);
     }
 
     async addArticle(article) {

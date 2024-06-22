@@ -103,12 +103,12 @@ function FormLivre({
           ISBN :
         </label>
         <input
-          type="number"
+          type="text"
           className=""
-          minLength="10"
-          maxLength="13"
+          pattern="[0-9]{10,13}"
+          min="0"
           id="ISBN"
-          title="Veuillez entrer un nombre positif."
+          title="Veuillez entrer un nombre positif (entre 10 et 13 caractères)."
           required
           name="ISBN"
           defaultValue={livre?.ISBN}
