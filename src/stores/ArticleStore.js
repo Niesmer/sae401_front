@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, values } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { API_URL_GET_PRODUCTS } from "./config";
 import { Article } from "./Article";
 import { Album } from "./Album";
@@ -17,7 +17,7 @@ export default class ArticleStore {
 
     async loadArticles() {
         try {
-            let articles = await fetch(API_URL_GET_PRODUCTS).then((value)=> value.json())
+            let articles = await fetch(API_URL_GET_PRODUCTS).then((value) => value.json());
             runInAction(() => {
                 this._articles = articles.map((article) => {
                     switch (article.article_type) {
@@ -29,42 +29,19 @@ export default class ArticleStore {
                             return new Article(article);
                     }
                 });
-
                 this._loading = false;
             });
-
-
         } catch (error) {
             runInAction(() => {
                 this._error = error;
                 this._loading = false;
-            })
-        }
-    }
-
-
-
-    async deleteArticle(id) {
-        try {
-            let response = await fetch(API_URL_GET_PRODUCTS + '/' + id, {
-                method: 'DELETE'
             });
-            if (response.ok) {
-                runInAction(() => {
-                    this._articles = this._articles.filter((article) => article.id !== id);
-                });
-            }
-        } catch (error) {
-            runInAction(() => {
-                this._error = error;
-            })
         }
     }
 
     get articles() {
         return this._articles;
     }
-
 
     get loading() {
         return this._loading;
@@ -86,33 +63,87 @@ export default class ArticleStore {
         this._error = error;
     }
 
-    async addArticle(article) {
-        return fetch(`${API_URL_GET_PRODUCTS}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(article),
-        });
+    getArticle(id) {
+        return this._articles.find((article) => article.id == id);
     }
 
-    getArticle(id) {
-        return this._articles.find((article) => article.id === id);
+    async addArticle(article) {
+        try {
+            let response = await fetch(`${API_URL_GET_PRODUCTS}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(article),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add the article');
+            }
+            let newArticle = await response.json();
+            runInAction(() => {
+                this._articles.push(newArticle);
+            });
+        } catch (error) {
+            runInAction(() => {
+                this._error = error;
+            });
+        }
+    }
+
+    async deleteArticle(id) {
+        try {
+            let response = await fetch(`${API_URL_GET_PRODUCTS}/${id}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                runInAction(() => {
+                    this._articles = this._articles.filter((article) => article.id !== id);
+                });
+            } else {
+                throw new Error('Failed to delete the article');
+            }
+        } catch (error) {
+            runInAction(() => {
+                this._error = error;
+            });
+        }
     }
 
     async updateArticle(data) {
         let article = this.getArticle(data.id);
         if (!article) {
-            return { success: false, message: "Article inexistant" };
+            runInAction(() => {
+                this._error = new Error('Article inexistant');
+            });
         } else {
-            return fetch(`${API_URL_GET_PRODUCTS}/${article.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+            try {
+                let response = await fetch(`${API_URL_GET_PRODUCTS}/${data.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    let { message } = await response.json();
+                    return runInAction(() => {
+                        this._error = message;
+                    });
+                }
+                let updatedArticle = await response.json();
+
+                runInAction(() => {
+                    const index = this._articles.findIndex((art) => art.id === updatedArticle.id);
+                    if (index !== -1) {
+                        this._articles[index] = updatedArticle;
+                    }
+                });
+            } catch (error) {
+                runInAction(() => {
+                    this._error = error;
+                });
             }
-            )
         }
     }
 }

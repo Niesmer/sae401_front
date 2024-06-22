@@ -1,36 +1,42 @@
-import { PropTypes, observer } from "mobx-react";
-import Popup from "./Popup";
-import FormArticle from "./FormArticle";
-import FormLivre from "./FormLivre";
-import FormMusique from "./FormMusique";
+import FormArticle from "./forms/FormArticle";
+import FormLivre from "./forms/FormLivre";
+import FormMusique from "./forms/FormMusique";
 
-
-function FormFactory({ typeArticle, idArticle = 0, closePopup }) {
-    
-    return (
-        <>
-            {typeArticle === "article" && (
-                
-                    <FormArticle idArticle={idArticle} onCancel={closePopup}></FormArticle>
-                
-            )}
-
-            {typeArticle === "livre" && (
-                
-                    <FormLivre idArticle={idArticle} onCancel={closePopup}></FormLivre>
-                
-            )}
-
-            {typeArticle === "musique" && (
-                
-                    <FormMusique idArticle={idArticle} onCancel={closePopup}></FormMusique>
-                
-            )}
-        </>
-    );
-
-
-
+function FormFactory({
+  loading,
+  article,
+  onCancel = () => {},
+  handleSubmit = () => {},
+}) {
+  switch (article.article_type) {
+    case "livre":
+      return (
+        <FormLivre
+          loading={loading}
+          livre={article}
+          handleSubmit={handleSubmit}
+          onCancel={onCancel}
+        />
+      );
+    case "musique":
+      return (
+        <FormMusique
+          loading={loading}
+          musique={article}
+          handleSubmit={handleSubmit}
+          onCancel={onCancel}
+        />
+      );
+    default:
+      return (
+        <FormArticle
+          loading={loading}
+          article={article}
+          handleSubmit={handleSubmit}
+          onCancel={onCancel}
+        />
+      );
+  }
 }
 
-export default observer(FormFactory);
+export default FormFactory;

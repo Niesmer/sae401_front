@@ -3,45 +3,40 @@ import { Article } from "./Article";
 export class Livre extends Article {
     constructor({ auteur, ISBN, nbPages, dateDeParution, ...article }) {
         super(article);
-        this.Auteur = auteur;
-        this.ISBN = ISBN;
-        this.NbPages = nbPages;
-        this.DateDeParution = dateDeParution;
+        this._auteur = auteur;
+        this._ISBN = ISBN;
+        this._nbPages = nbPages;
+        this._dateDeParution = dateDeParution;
     }
 
-    getAuteur() {
+    get auteur() {
         return this._auteur;
     }
 
-    setAuteur(auteur) {
+    set auteur(auteur) {
         this._auteur = auteur;
-        return this;
     }
-
-    getISBN() {
+    get ISBN() {
         return this._ISBN;
     }
 
-    setISBN(ISBN) {
+    set ISBN(ISBN) {
         this._ISBN = ISBN;
-        return this;
     }
 
-    getNbPages() {
+    get nbPages() {
         return this._nbPages;
     }
 
-    setNbPages(nbPages) {
+    set nbPages(nbPages) {
         this._nbPages = nbPages;
-        return this;
     }
 
-    getDateDeParution() {
+    get dateDeParution() {
         return this._dateDeParution;
     }
 
-    setDateDeParution(dateDeParution) {
-        this.DateDeParution = dateDeParution;
-        return this;
+    set dateDeParution(dateDeParution) {
+        this._dateDeParution = dateDeParution;
     }
 }
