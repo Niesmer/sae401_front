@@ -6,6 +6,7 @@ import {
   faCircleInfo,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { IMG_URL } from "../stores/config";
 
 function LigneArticle({
   data = {},
@@ -14,6 +15,8 @@ function LigneArticle({
   setPopupArticle,
 }) {
   const [isVisible, setIsVisible] = useState(false);
+
+  console.log(data);
 
   if (!keys) {
     keys = Object.keys(data);
@@ -52,15 +55,30 @@ function LigneArticle({
         } transition-all md:py-3 md:max-h-none 
       overflow-hidden md:h-auto grid grid-flow-row md:grid-flow-col md:auto-cols-[1fr] gap-4 border-t md:p-2`}
       >
-        {keys.map((key) => (
-          <div
-            key={key}
-            className={` w-full md:w-auto max-w-25 overflow-hidden pl-4 flex gap-2`}
-          >
-            <span className="block md:hidden font-bold">{key}:</span>
-            <p className="text-ellipsis overflow-hidden">{data[key]} </p>
-          </div>
-        ))}
+        {keys.map((key) =>
+          key === "image" ? (
+            // eslint-disable-next-line jsx-a11y/alt-text
+            data[key] ? (
+              <img
+                src={
+                  data[key]?.startsWith("https")
+                    ? data[key]
+                    : IMG_URL + data[key]
+                }
+              ></img>
+            ) : (
+              <p></p>
+            )
+          ) : (
+            <div
+              key={key}
+              className={` w-full md:w-auto max-w-25 overflow-hidden pl-4 flex gap-2`}
+            >
+              <span className="block md:hidden font-bold">{key}:</span>
+              <p className="text-ellipsis overflow-hidden">{data[key]} </p>
+            </div>
+          )
+        )}
         <div
           className={` flex md:flex justify-center items-center gap-2 w-full md:w-auto mt-2 md:mt-0`}
         >

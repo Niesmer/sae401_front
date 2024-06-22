@@ -77,11 +77,15 @@ export default class ArticleStore {
                 body: JSON.stringify(article),
             });
             if (!response.ok) {
-                throw new Error('Failed to add the article');
+                let { message } = await response.json();
+                let errors = Object.entries(message).map(([, value]) => `${value}`);
+                return runInAction(() => {
+                    this._error = errors;
+                });
             }
             let newArticle = await response.json();
             runInAction(() => {
-                this._articles.push(newArticle);
+                
             });
         } catch (error) {
             runInAction(() => {
@@ -127,8 +131,9 @@ export default class ArticleStore {
 
                 if (!response.ok) {
                     let { message } = await response.json();
+                    let errors = Object.entries(message).map(([, value]) => `${value}`);
                     return runInAction(() => {
-                        this._error = message;
+                        this._error = errors;
                     });
                 }
                 let updatedArticle = await response.json();

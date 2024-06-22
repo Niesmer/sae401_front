@@ -15,12 +15,13 @@ function ArticleList() {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [selectedPopup, setSelectedPopup] = useState(null);
   const [searchValue, setSearchValue] = useState("");
+  const [articles, setArticles] = useState(ArticleStore.articles);
 
   useEffect(() => {
     if (ArticleStore.articles.length > 0) {
       setKeys(Article.keys());
     }
-  }, [ArticleStore.articles]);
+  }, [ArticleStore.articles, Article]);
 
   const handleSearchChange = (value) => {
     setSearchValue(value);
@@ -49,11 +50,10 @@ function ArticleList() {
   };
 
   const handleSubmit = async (e) => {
-    setError(null);
     e.preventDefault();
+    ArticleStore.error = null;
     setLoading(true);
     const formData = Object.fromEntries(new FormData(e.target));
-    console.log(formData);
     selectedPopup === "add"
       ? await ArticleStore.addArticle(formData)
       : await ArticleStore.updateArticle(formData);
@@ -71,12 +71,11 @@ function ArticleList() {
     ArticleStore.error = null;
   };
 
-  const filteredArticles = ArticleStore.articles.filter((article) => {
-    return keys.some((key) =>
-      article[key].toString().toLowerCase().includes(searchValue.toLowerCase())
-    );
-  });
-
+  //const filteredArticles = ArticleStore.articles.filter((article) => {
+  //  return keys.some((key) =>
+  //    article[key].toString().toLowerCase().includes(searchValue.toLowerCase())
+  //  );
+  //});
   return (
     <>
       <li className="flex justify-center gap-2 flex-wrap w-full sticky z-[1] top-4 md:flex-nowrap md:justify-between ">
@@ -100,19 +99,15 @@ function ArticleList() {
           <li className="text-center">Actions</li>
         </ul>
       </li>
-      {!searchValue
-        ? ArticleStore.articles.map((article) => (
-            <LigneArticle
-              key={article.id}
-              keys={keys}
-              data={article}
-              setPopupArticle={setSelectedArticle}
-              setPopupType={setSelectedPopup}
-            />
-          ))
-        : filteredArticles.map((article) => (
-            <LigneArticle key={article.id} data={article} />
-          ))}
+      {articles.map((article) => (
+        <LigneArticle
+          key={article.id}
+          keys={keys}
+          data={article}
+          setPopupArticle={setSelectedArticle}
+          setPopupType={setSelectedPopup}
+        />
+      ))}
       <PopupArticleFactory
         popupType={selectedPopup}
         article={selectedArticle}

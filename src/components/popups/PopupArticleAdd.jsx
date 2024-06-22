@@ -56,7 +56,9 @@ function PopupArticleAdd({ error, article, loading, onCancel, onSubmit }) {
           }}
         />
       </div>
-      {error && <p className="text-red-500 bg-red-300 p-4 rounded-md">{error}</p>}
+      {error && (
+        <p className="text-red-500 bg-red-300 p-4 rounded-md">{error}</p>
+      )}
     </Popup>
   );
 }

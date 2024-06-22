@@ -13,7 +13,7 @@ function FormMusique({
       </h2>
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="id" value={musique?.id} />
-        <input type="hidden" name="article_type" value="livre" />
+        <input type="hidden" name="article_type" value="musique" />
         <ul className="flex flex-col gap-2">
           <li className="grid grid-rows-2  grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
             <label
