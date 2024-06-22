@@ -65,16 +65,16 @@ function ArticleList() {
     }
   };
 
+  const filteredArticles = ArticleStore.articles.filter((article) => {
+    return keys.some((key) => article[key].toString().toLowerCase().includes(searchValue.toLowerCase()));
+  });
+
   const handleCancel = () => {
     setSelectedPopup(null);
     ArticleStore.error = null;
   };
 
-  //const filteredArticles = ArticleStore.articles.filter((article) => {
-  //  return keys.some((key) =>
-  //    article[key].toString().toLowerCase().includes(searchValue.toLowerCase())
-  //  );
-  //});
+  
   return (
     <>
       <li className="flex justify-center gap-2 flex-wrap w-full sticky z-[1] top-4 md:flex-nowrap md:justify-between ">
@@ -107,7 +107,7 @@ function ArticleList() {
           setPopupType={setSelectedPopup}
         />
       )) : 
-      ArticleStore.articles.filter((article) => article).map((article) => (
+      filteredArticles.map((article) => (
         <LigneArticle
           key={article.id}
           keys={keys}
