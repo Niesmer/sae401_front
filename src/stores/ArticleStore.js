@@ -5,12 +5,11 @@ import { Album } from "./Album";
 import { Livre } from "./Livre";
 
 export default class ArticleStore {
-    _loading; _error; _articles;
+    _articles = [];
+    _loading = true;
+    _error = null;
 
     constructor() {
-        this._articles = [];
-        this._loading = true;
-        this._error = null;
         makeAutoObservable(this);
         this.loadArticles();
     }
@@ -47,20 +46,12 @@ export default class ArticleStore {
         return this._loading;
     }
 
-    get error() {
-        return this._error;
-    }
-
-    set articles(articles) {
-        this._articles = articles;
-    }
-
-    set loading(loading) {
-        this._loading = loading;
-    }
-
     set error(error) {
         this._error = error;
+    }
+
+    get error() {
+        return this._error;
     }
 
     getArticle(id) {
@@ -85,7 +76,7 @@ export default class ArticleStore {
             }
             let newArticle = await response.json();
             runInAction(() => {
-                
+                this._articles.push(newArticle);
             });
         } catch (error) {
             runInAction(() => {

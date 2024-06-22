@@ -15,13 +15,12 @@ function ArticleList() {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [selectedPopup, setSelectedPopup] = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [articles, setArticles] = useState(ArticleStore.articles);
 
   useEffect(() => {
     if (ArticleStore.articles.length > 0) {
       setKeys(Article.keys());
     }
-  }, [ArticleStore.articles, Article]);
+  }, [ArticleStore.articles]);
 
   const handleSearchChange = (value) => {
     setSearchValue(value);
@@ -99,7 +98,7 @@ function ArticleList() {
           <li className="text-center">Actions</li>
         </ul>
       </li>
-      {articles.map((article) => (
+      {ArticleStore.articles.map((article) => (
         <LigneArticle
           key={article.id}
           keys={keys}

@@ -15,9 +15,6 @@ function LigneArticle({
   setPopupArticle,
 }) {
   const [isVisible, setIsVisible] = useState(false);
-
-  console.log(data);
-
   if (!keys) {
     keys = Object.keys(data);
   }
@@ -57,9 +54,10 @@ function LigneArticle({
       >
         {keys.map((key) =>
           key === "image" ? (
-            // eslint-disable-next-line jsx-a11y/alt-text
             data[key] ? (
               <img
+                key={key}
+                alt="Couverture de data['titre']"
                 src={
                   data[key]?.startsWith("https")
                     ? data[key]
@@ -67,7 +65,7 @@ function LigneArticle({
                 }
               ></img>
             ) : (
-              <p></p>
+              <p key={key}></p>
             )
           ) : (
             <div
