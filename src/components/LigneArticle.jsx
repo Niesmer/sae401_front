@@ -48,7 +48,7 @@ function LigneArticle({
       </li>
       <li
         className={`${
-          isVisible ? "max-h-96 p-2" : "max-h-0 p-0"
+          isVisible ? "max-h-[96rem] p-2" : "max-h-0 p-0"
         } transition-all md:py-3 md:max-h-none 
       overflow-hidden md:h-auto grid grid-flow-row md:grid-flow-col md:auto-cols-[1fr] gap-4 border-t md:p-2`}
       >

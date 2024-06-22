@@ -1,3 +1,5 @@
+import { observer } from "mobx-react";
+
 function FormMusique({
   musique,
   loading = false,
@@ -20,7 +22,7 @@ function FormMusique({
               className="text-left md:text-right before:content-['*'] before:text-red-500"
               htmlFor="titre"
             >
-              titre :
+              Titre :
             </label>
             <input
               type="text"
@@ -36,7 +38,7 @@ function FormMusique({
               className="text-left md:text-right before:content-['*'] before:text-red-500"
               htmlFor="prix"
             >
-              prix :
+              Prix :
             </label>
             <input
               type="number"
@@ -53,7 +55,7 @@ function FormMusique({
               className="text-left md:text-right before:content-['*'] before:text-red-500"
               htmlFor="disponibilite"
             >
-              disponibilite :
+              Disponibilite :
             </label>
             <input
               type="number"
@@ -124,4 +126,4 @@ function FormMusique({
   );
 }
 
-export default FormMusique;
+export default observer(FormMusique);

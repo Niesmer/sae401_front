@@ -17,6 +17,10 @@
         @apply text-xl sm:text-2xl lg:text-3xl text-center my-4;
     }
 
+    h2 {
+        @apply text-2xl sm:text-2xl lg:text-3xl text-center my-4;
+    }
+
 
     main {
         @apply mx-auto max-w-[1560px];

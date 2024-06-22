@@ -98,7 +98,7 @@ function ArticleList() {
           <li className="text-center">Actions</li>
         </ul>
       </li>
-      {ArticleStore.articles.map((article) => (
+      {!searchValue ? ArticleStore.articles.map((article) => (
         <LigneArticle
           key={article.id}
           keys={keys}
@@ -106,7 +106,17 @@ function ArticleList() {
           setPopupArticle={setSelectedArticle}
           setPopupType={setSelectedPopup}
         />
-      ))}
+      )) : 
+      ArticleStore.articles.filter((article) => article).map((article) => (
+        <LigneArticle
+          key={article.id}
+          keys={keys}
+          data={article}
+          setPopupArticle={setSelectedArticle}
+          setPopupType={setSelectedPopup}
+        />
+      ))
+      }
       <PopupArticleFactory
         popupType={selectedPopup}
         article={selectedArticle}

@@ -1,3 +1,5 @@
+import { observer } from "mobx-react";
+
 function FormLivre({
   loading,
   livre,
@@ -7,13 +9,15 @@ function FormLivre({
   return (
     <>
       <h2>
-        {livre.id ? `Modifier le livre ${livre.id}` : "Ajouter une Livre"}
+        {livre.id ? `Modifier le livre ${livre.id}` : "Ajouter un Livre"}
       </h2>
 
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="id" value={livre?.id} />
         <input type="hidden" name="article_type" value="livre" />
-
+        <ul className="flex flex-col gap-2">
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+            
         <label
           className="text-left md:text-right before:content-['*'] before:text-red-500"
           htmlFor="titre"
@@ -45,7 +49,9 @@ function FormLivre({
           name="prix"
           defaultValue={livre?.prix}
         />
-
+ </li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+         
         <label
           className="text-left md:text-right before:content-['*'] before:text-red-500"
           htmlFor="disponibilite"
@@ -61,7 +67,9 @@ function FormLivre({
           name="disponibilite"
           defaultValue={livre?.disponibilite}
         />
-
+ </li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+         
         <label className="text-left md:text-right" htmlFor="image">
           Image :
         </label>
@@ -72,7 +80,9 @@ function FormLivre({
           name="image"
           defaultValue={livre?.image}
         />
-
+ </li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+         
         <label className="text-left md:text-right" htmlFor="auteur">
           Auteur :
         </label>
@@ -83,7 +93,9 @@ function FormLivre({
           name="auteur"
           defaultValue={livre?.auteur}
         />
-
+ </li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+         
         <label
           className="text-left md:text-right before:content-['*'] before:text-red-500"
           htmlFor="ISBN"
@@ -101,7 +113,9 @@ function FormLivre({
           name="ISBN"
           defaultValue={livre?.ISBN}
         />
-
+  </li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-2 md:gap-4">
+         
         <label
           className="text-left md:text-right before:content-['*'] before:text-red-500"
           htmlFor="nbPages"
@@ -117,7 +131,9 @@ function FormLivre({
           name="nbPages"
           defaultValue={livre?.nbPages}
         />
-
+</li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+           
         <label className="text-left md:text-right" htmlFor="dateDeParution">
           Date de parution :
         </label>
@@ -128,7 +144,9 @@ function FormLivre({
           name="dateDeParution"
           defaultValue={livre?.dateDeParution}
         />
-
+</li>
+          <li className="grid grid-rows-2 grid-cols-1 md:grid-cols-2 md:grid-rows-1 gap-4">
+           
         <button
           className="btn w-full rounded-full"
           title="confirm"
@@ -144,9 +162,11 @@ function FormLivre({
         >
           Annuler
         </button>
+        </li>
+        </ul>
       </form>
     </>
   );
 }
 
-export default FormLivre;
+export default observer(FormLivre);

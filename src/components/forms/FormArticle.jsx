@@ -1,3 +1,5 @@
+import { observer } from "mobx-react";
+
 function FormArticle({
   loading,
   article,
@@ -19,13 +21,14 @@ function FormArticle({
               className="text-left md:text-right before:content-['*'] before:text-red-500"
               htmlFor="titre"
             >
-              titre :
+              Titre :
             </label>
             <input
               type="text"
               className=""
               id="titre"
               name="titre"
+
               required
               defaultValue={article?.titre}
             />
@@ -35,7 +38,7 @@ function FormArticle({
               className="text-left md:text-right before:content-['*'] before:text-red-500"
               htmlFor="prix"
             >
-              prix :
+              Prix :
             </label>
             <input
               type="number"
@@ -43,6 +46,8 @@ function FormArticle({
               id="prix"
               min="0"
               name="prix"
+              step={0.01}
+
               required
               defaultValue={article?.prix}
             />
@@ -52,7 +57,7 @@ function FormArticle({
               className="text-left md:text-right before:content-['*'] before:text-red-500"
               htmlFor="disponibilite"
             >
-              disponibilite :
+              Disponibilite :
             </label>
             <input
               type="number"
@@ -60,14 +65,13 @@ function FormArticle({
               id="disponibilite"
               min="0"
               required
-              pattern="{0,9}"
               name="disponibilite"
               defaultValue={article?.disponibilite}
             />
           </li>
           <li className="grid grid-rows-2 grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
             <label className="text-left md:text-right" htmlFor="image">
-              image :
+              Image :
             </label>
             <input
               type="text"
@@ -100,4 +104,4 @@ function FormArticle({
   );
 }
 
-export default FormArticle;
+export default observer(FormArticle);
