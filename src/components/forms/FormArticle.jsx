@@ -104,4 +104,4 @@ function FormArticle({
   );
 }
 
-export default observer(FormArticle);
+export default FormArticle;

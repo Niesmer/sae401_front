@@ -169,4 +169,4 @@ function FormLivre({
   );
 }
 
-export default observer(FormLivre);
+export default FormLivre;
