@@ -17,7 +17,7 @@ const handleChange = (event) => {
 };
   return (
     <form onSubmit={handleSubmit} className="rounded-full md:w-2/3 w-full z-[2] bg-indigo-50 text-lg border border-gray-400 py-1 px-6  grid grid-cols-[1fr_auto]">
-      <input onChange={handleChange} className="border-0 bg-transparent focus:outline-0 w-full" type="search" placeholder="Search" name="search" aria-label="Search" minLength={nbCarMin} />
+      <input onChange={handleChange} className="border-0 bg-transparent focus:border-0 focus:outline-0 w-full" type="search" placeholder="Search" name="search" aria-label="Search" minLength={nbCarMin} />
       <button>
         <FontAwesomeIcon icon={faMagnifyingGlass} />
       </button>
