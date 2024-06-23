@@ -126,4 +126,4 @@ function FormMusique({
   );
 }
 
-export default observer(FormMusique);
+export default FormMusique;
